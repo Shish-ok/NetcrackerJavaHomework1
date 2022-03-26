@@ -54,5 +54,62 @@ public class MyComplex {
     public boolean equals(MyComplex another) {
         return this.real == another.getReal() && this.imag == another.getImag();
     }
-    
+    public double magnitude() {
+        return Math.sqrt(real * real + imag * imag);
+    }
+    public double argument() {
+        if (real > 0) {
+            return Math.atan(imag / real);
+        }
+        else if (real < 0 && imag < 0) {
+            return -Math.PI + Math.atan(imag / real);
+        }
+        else if (real == 0 && imag > 0) {
+            return Math.PI / 2;
+        }
+        else if (real == 0 && imag < 0) {
+            return -Math.PI / 2;
+        }
+        else {
+            return Math.PI + Math.atan(imag / real);
+        }
+    }
+
+    public MyComplex add(MyComplex right) {
+        this.real += right.real;
+        this.imag += right.imag;
+        return this;
+    }
+    public MyComplex addNew(MyComplex right) {
+        return new MyComplex(this.real + right.real, this.imag + right.imag);
+    }
+
+    public MyComplex subtract(MyComplex right) {
+        this.real -= right.real;
+        this.imag -= right.imag;
+        return this;
+    }
+    public MyComplex subtractNew(MyComplex right) {
+        return new MyComplex(this.real - right.real, this.imag - right.imag);
+    }
+
+    public MyComplex multiply(MyComplex right) {
+        double real = this.real * right.real - this.imag * right.imag;
+        double imag = this.real * right.real + this.imag * right.imag;
+        this.real = real;
+        this.imag = imag;
+        return this;
+    }
+
+    public MyComplex devide(MyComplex right) {
+        double real = (this.real * right.real + this.imag * right.imag) / (right.real * right.real + right.imag * right.imag);
+        double imag = (right.real * this.imag - right.real * right.imag) / (right.real * right.real + right.imag * right.imag);
+        this.real = real;
+        this.imag = imag;
+        return this;
+    }
+
+    public MyComplex conjugate() {
+        return new MyComplex(this.real, -this.imag);
+    }
 }
