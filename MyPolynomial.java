@@ -11,10 +11,6 @@ public class MyPolynomial {
         return coeffs.length - 1;
     }
 
-    public double getCoeff(int index) {
-        return this.coeffs[index];
-    }
-
     public String toString() {
         String s = "";
         int n = coeffs.length;
@@ -47,17 +43,17 @@ public class MyPolynomial {
         int n;
         double[] result;
         boolean flag = true;
-        if (right.getDegree() + 1 < this.coeffs.length) {
-            n = right.getDegree() + 1;
+        if (right.coeffs.length < this.coeffs.length) {
+            n = right.coeffs.length;
             result = new double[this.coeffs.length];
         }
         else {
             n = this.coeffs.length;
-            result = new double[right.getDegree() + 1];
+            result = new double[right.coeffs.length];
             flag = false;
         }
         for (int i = 0; i < n; ++i) {
-            result[i] = this.coeffs[i] + right.getCoeff(i);
+            result[i] = this.coeffs[i] + right.coeffs[i];
         }
         if (flag) {
             for(int i = n; i < this.coeffs.length; ++i) {
@@ -65,8 +61,8 @@ public class MyPolynomial {
             }
         }
         else {
-            for(int i = n; i < right.getDegree() + 1; ++i) {
-                result[i] = right.getCoeff(i);
+            for(int i = n; i < right.coeffs.length; ++i) {
+                result[i] = right.coeffs[i];
             }
         }
         return new MyPolynomial(result);
@@ -74,11 +70,11 @@ public class MyPolynomial {
 
     public MyPolynomial multiply(MyPolynomial right) {
         int thisDegree = this.coeffs.length;
-        int rightDegree = right.getDegree() + 1;
+        int rightDegree = right.coeffs.length;
         double[] result = new double[thisDegree + rightDegree];
         for (int i = 0; i < thisDegree; ++i) {
             for (int j = 0; j < rightDegree; ++j) {
-                result[i+j] += (this.coeffs[i] * right.getCoeff(j));
+                result[i+j] += (this.coeffs[i] * right.coeffs[j]);
             }
         }
         return new MyPolynomial(result);
